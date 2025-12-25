@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public Animator horseAnimator;
-    private bool gameHasStarted = false;
+    public static bool gameHasStarted = false;
 
     void Update()
     {

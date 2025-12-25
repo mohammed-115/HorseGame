@@ -14,6 +14,9 @@ public class MapMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!GameManager.gameHasStarted)
+            return;
+
         transform.Translate(0, 0, mapMoveSpeed * Time.deltaTime * -1);
     }
 }
