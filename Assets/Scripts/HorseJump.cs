@@ -7,44 +7,52 @@ public class HorseJump : MonoBehaviour
     public float jumpForce = 7f;
 
     [Header("Ground Check Settings")]
-    public Transform groundCheck;      // نقطة فارغة توضع أسفل حوافر الحصان
-    public float groundDistance = 0.05f; // نصف قطر دائرة التحقق
-    public LayerMask groundMask;       // تختار منها طبقة الأرض (Ground Layer)
+    public Transform groundCheck;
+    public float groundDistance = 0.2f;
+    public LayerMask groundMask;
 
     private bool isGrounded;
-    private bool gameStarted = false;
+    private float jumpDelay = 0.1f; // وقت انتظار بسيط لمنع التكرار
+    private float nextJumpTime;
 
     void Update()
     {
-        // 1. التحقق إذا كان الحصان يلمس الأرض باستخدام الـ Layer
+        // 1. التحقق من ملامسة الأرض
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        // تحديث الأنيميشن بناءً على حالة الأرض
-        horseAnimator.SetBool("isJumping", !isGrounded);
+        // 2. تحديث الأنيميشن: نستخدم التحقق من الأرض مباشرة
+        // لضمان عدم تعليق الأنيميشن، نتأكد من أننا لسنا في "وقت الانتظار"
+        if (Time.time > nextJumpTime)
+        {
+            horseAnimator.SetBool("isJumping", !isGrounded);
+        }
 
-        // 2. التحقق من الضغط للقفز
+        // 3. مدخلات القفز
         bool jumpInput = Input.GetKeyDown(KeyCode.Space) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began);
 
-        // التحقق من أن اللعبة بدأت (عن طريق الباراميتر اللي عملناه سابقاً)
-        if (horseAnimator.GetBool("IsGameStarting") && jumpInput && isGrounded)
+        // 4. الشرط المعدل: إضافة شرط الوقت (Time.time > nextJumpTime)
+        if (isGrounded && IsRunning() && jumpInput && Time.time > nextJumpTime)
         {
             Jump();
         }
     }
 
-    void Jump()
+    bool IsRunning()
     {
-        // استخدام Impulse يعطي قوة دفع فورية مناسبة للقفز
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        return horseAnimator.GetBool("IsGameStarting");
     }
 
-    // لرؤية دائرة التحقق في نافذة الـ Scene للتأكد من مكانها
-    private void OnDrawGizmos()
+    void Jump()
     {
-        if (groundCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
-        }
+        // تحديد موعد القفزة القادمة لمنع التكرار العشوائي
+        nextJumpTime = Time.time + jumpDelay;
+
+        // تصفير السرعة لضمان قفزة نظيفة
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
+        // تفعيل الأنيميشن فوراً عند القفز
+        horseAnimator.SetBool("isJumping", true);
     }
 }
