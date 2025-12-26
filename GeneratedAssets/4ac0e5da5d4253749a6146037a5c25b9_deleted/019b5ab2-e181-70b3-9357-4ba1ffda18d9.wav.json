@@ -1,0 +1,13 @@
+{
+    "asset": "4ac0e5da5d4253749a6146037a5c25b9",
+    "fileName": "019b5ab2-e181-70b3-9357-4ba1ffda18d9.wav",
+    "prompt": "\"High-quality, short, sparkling gold coin collect sound, retro arcade style, bright and satisfying chime, 8-bit digital pickup, clean audio, no background noise, magical ding.\"",
+    "negativePrompt": "Long decay, background hiss, distorted, heavy bass, footsteps, explosion, human voice, wind noise, metallic scratching, muffled.\"",
+    "model": "5de0686a-fb27-40e5-9df0-28ae810d70ca",
+    "modelName": "ElevenLabs Sound Effects V2",
+    "customSeed": -1,
+    "w3CTraceId": "1c0b78404075ae69aa21c7ceb87dd3a5",
+    "duration": 1.0,
+    "autoTrim": true,
+    "hasReference": false
+}
