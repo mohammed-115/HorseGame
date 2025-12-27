@@ -10,7 +10,7 @@ public class Obstacle : MonoBehaviour
         if (((1 << other.gameObject.layer) & horseChestMask) != 0)
         {
             Debug.Log("Game Over!");
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
         }
         else
         {

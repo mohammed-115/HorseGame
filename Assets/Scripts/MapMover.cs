@@ -1,22 +1,15 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MapMover : MonoBehaviour
 {
-
-    [SerializeField] private float mapMoveSpeed = 5f;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if(!GameManager.gameHasStarted)
-            return;
+        if (!GameManager.gameHasStarted) return;
 
-        transform.Translate(0, 0, mapMoveSpeed * Time.deltaTime * -1);
+        // نستخدم SpeedManager.GlobalSpeed بدلاً من المتغير المحلي
+        transform.Translate(0, 0, SpeedManager.GlobalSpeed * Time.deltaTime * -1);
+
+        // إذا خرج الماب عن حدود الرؤية (خلف اللاعب) يحذف نفسه
+        if (transform.position.z < -500f) { Destroy(gameObject); }
     }
 }
