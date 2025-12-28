@@ -5,6 +5,7 @@ public class HorseJump : MonoBehaviour
     public Rigidbody rb;
     public Animator horseAnimator;
     public float jumpForce = 7f;
+    public HorseAudioManager horseAudio;
 
     [Header("Ground Check Settings")]
     public Transform groundCheck;
@@ -54,5 +55,7 @@ public class HorseJump : MonoBehaviour
 
         // تفعيل الأنيميشن فوراً عند القفز
         horseAnimator.SetBool("isJumping", true);
+
+        horseAudio.PlayJumpSound();
     }
 }
