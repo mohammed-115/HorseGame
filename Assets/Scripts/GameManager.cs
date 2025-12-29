@@ -4,12 +4,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public Animator horseAnimator;
-    public static bool gameHasStarted = false;
+    public static bool AbleToMove = false;
+    public static bool stopCompletly = false;
 
     void Update()
     {
         // التحقق من أول ضغطة لبدء اللعبة
-        if (!gameHasStarted && (Input.anyKeyDown || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)))
+        if ((!AbleToMove && (Input.anyKeyDown || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))) && !stopCompletly)
         {
             StartGame();
         }
@@ -17,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     void StartGame()
     {
-        gameHasStarted = true;
+        AbleToMove = true;
         // تفعيل باراميتر بدء اللعبة في الـ Animator
         horseAnimator.SetBool("IsGameStarting", true);
         Debug.Log("Game Started!");

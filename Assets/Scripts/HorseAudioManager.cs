@@ -22,6 +22,13 @@ public class HorseAudioManager : MonoBehaviour
     private bool isGrounded;
     private bool wasGrounded;
 
+    public static HorseAudioManager instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     void Start()
     {
         // إعداد صوت الركض الأولي
@@ -43,7 +50,7 @@ public class HorseAudioManager : MonoBehaviour
         isGrounded = Physics.CheckSphere(groundCheck.position, checkRadius, groundLayer);
 
         // إذا لم تبدأ اللعبة بعد، نحدث الحالة فقط ونوقف الأصوات
-        if (!GameManager.gameHasStarted)
+        if (!GameManager.AbleToMove)
         {
             if (runningSource.isPlaying) runningSource.Stop();
             wasGrounded = isGrounded;
@@ -67,7 +74,7 @@ public class HorseAudioManager : MonoBehaviour
     private void HandleRunningLoop()
     {
         // يشغل صوت الركض فقط إذا كان على الأرض، اللعبة بدأت، ولا يوجد تأخير "Invoke" حالي
-        if (isGrounded && !runningSource.isPlaying && !IsInvoking("StartRunningSound"))
+        if ((isGrounded && !runningSource.isPlaying && !IsInvoking("StartRunningSound")) && !GameManager.stopCompletly)
         {
             runningSource.Play();
         }
@@ -95,7 +102,7 @@ public class HorseAudioManager : MonoBehaviour
     private void StartRunningSound()
     {
         // التأكد من أن الحصان لا يزال على الأرض قبل إعادة تشغيل الصوت
-        if (isGrounded && GameManager.gameHasStarted)
+        if (isGrounded && GameManager.AbleToMove)
         {
             runningSource.Play();
         }
@@ -110,4 +117,10 @@ public class HorseAudioManager : MonoBehaviour
         if (jumpClip != null)
             effectsSource.PlayOneShot(jumpClip);
     }
+
+    public void StopRunningSound()
+    {
+        runningSource.Stop();
+    }
+
 }

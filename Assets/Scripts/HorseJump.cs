@@ -32,7 +32,7 @@ public class HorseJump : MonoBehaviour
         bool jumpInput = Input.GetKeyDown(KeyCode.Space) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began);
 
         // 4. الشرط المعدل: إضافة شرط الوقت (Time.time > nextJumpTime)
-        if (isGrounded && IsRunning() && jumpInput && Time.time > nextJumpTime)
+        if (isGrounded && IsRunning() && jumpInput && Time.time > nextJumpTime && !GameManager.stopCompletly)
         {
             Jump();
         }

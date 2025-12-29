@@ -4,7 +4,7 @@ public class MapMover : MonoBehaviour
 {
     void Update()
     {
-        if (!GameManager.gameHasStarted) return;
+        if (!GameManager.AbleToMove || GameManager.stopCompletly) return;
 
         // نستخدم SpeedManager.GlobalSpeed بدلاً من المتغير المحلي
         transform.Translate(0, 0, SpeedManager.GlobalSpeed * Time.deltaTime * -1);

@@ -28,7 +28,7 @@ public class ObstacleSpawner : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.gameHasStarted) return;
+        if (!GameManager.AbleToMove || GameManager.stopCompletly) return;
 
         timer += Time.deltaTime;
 
@@ -112,7 +112,7 @@ public class ObstacleMover : MonoBehaviour
     void Update()
     {
         // 1. تأكد أن اللعبة بدأت
-        if (!GameManager.gameHasStarted) return;
+        if (!GameManager.AbleToMove) return;
 
         // 2. التحريك باستخدام السرعة العالمية
         // جرب استخدام Space.World لضمان أن الحركة في اتجاه العالم وليس اتجاه الكائن نفسه
