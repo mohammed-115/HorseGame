@@ -9,6 +9,8 @@ public class PlayerDieManager : MonoBehaviour
     [SerializeField] private GameObject endScreenUI;
     [SerializeField] private Animator horseAnimator;
 
+    public event EventHandler onEndScreenShow;
+
     private void Awake()
     {
         instance = this;
@@ -29,6 +31,8 @@ public class PlayerDieManager : MonoBehaviour
         HorseAudioManager.instance.StopRunningSound();
         horseAnimator.SetBool("IsGameStarting", false);
         horseAnimator.SetBool("onHorseDie", true);
+
+        onEndScreenShow?.Invoke(this, EventArgs.Empty);
 
     }
 

@@ -4,26 +4,27 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    private int coinsCounter = 0;
+    public static Player instance;
+
+    public int coinsCounter { get; private set; }
     [SerializeField] private TextMeshProUGUI coinsCounterText;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        coinsCounter = 0;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void AddCoin()
     {
         coinsCounter++;
         coinsCounterText.text = coinsCounter.ToString();
-        
     }
 
 }
