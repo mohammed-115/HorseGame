@@ -8,7 +8,7 @@ public class SpeedManager : MonoBehaviour
 
     void Update()
     {
-        if (!GameManagment.AbleToMove) return;
+        if (!GameManagment.AbleToMove || GameManagment.stopCompletly) return;
 
         // زيادة السرعة تدريجياً مع الوقت
         if (GlobalSpeed < maxSpeed)
