@@ -12,6 +12,7 @@ public class EndScreenButtons : MonoBehaviour
         // ملاحظة: تأكد من كتابة اسم الكلاس GameManagement بشكل صحيح (غالباً بالـ e وليس a)
         GameManagment.stopCompletly = false;
         GameManagment.AbleToMove = false;
+        SpeedManager.GlobalSpeed = 10;
     }
 
     public void BUTTON_MAIN_MENU()
