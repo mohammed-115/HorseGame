@@ -50,7 +50,7 @@ public class HorseAudioManager : MonoBehaviour
         isGrounded = Physics.CheckSphere(groundCheck.position, checkRadius, groundLayer);
 
         // إذا لم تبدأ اللعبة بعد، نحدث الحالة فقط ونوقف الأصوات
-        if (!GameManager.AbleToMove)
+        if (!GameManagment.AbleToMove)
         {
             if (runningSource.isPlaying) runningSource.Stop();
             wasGrounded = isGrounded;
@@ -74,7 +74,7 @@ public class HorseAudioManager : MonoBehaviour
     private void HandleRunningLoop()
     {
         // يشغل صوت الركض فقط إذا كان على الأرض، اللعبة بدأت، ولا يوجد تأخير "Invoke" حالي
-        if ((isGrounded && !runningSource.isPlaying && !IsInvoking("StartRunningSound")) && !GameManager.stopCompletly)
+        if ((isGrounded && !runningSource.isPlaying && !IsInvoking("StartRunningSound")) && !GameManagment.stopCompletly)
         {
             runningSource.Play();
         }
@@ -102,7 +102,7 @@ public class HorseAudioManager : MonoBehaviour
     private void StartRunningSound()
     {
         // التأكد من أن الحصان لا يزال على الأرض قبل إعادة تشغيل الصوت
-        if (isGrounded && GameManager.AbleToMove)
+        if (isGrounded && GameManagment.AbleToMove)
         {
             runningSource.Play();
         }

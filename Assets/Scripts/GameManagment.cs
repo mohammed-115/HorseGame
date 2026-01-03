@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManagment : MonoBehaviour
 {
     public Animator horseAnimator;
     public static bool AbleToMove = false;

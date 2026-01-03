@@ -26,8 +26,8 @@ public class PlayerDieManager : MonoBehaviour
     {
 
         endScreenUI.SetActive(true);
-        GameManager.stopCompletly = true;
-        GameManager.AbleToMove = false;
+        GameManagment.stopCompletly = true;
+        GameManagment.AbleToMove = false;
         HorseAudioManager.instance.StopRunningSound();
         horseAnimator.SetBool("IsGameStarting", false);
         horseAnimator.SetBool("onHorseDie", true);
