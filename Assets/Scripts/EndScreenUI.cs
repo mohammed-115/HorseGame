@@ -4,18 +4,18 @@ using UnityEngine;
 public class EndScreenUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI bestRecordText;
 
-    // يُفضل استخدام OnEnable لضمان تجديد الاشتراك دائماً
+    private const string BEST_SCORE_KEY = "BestScore"; // اسم المفتاح الذي سنخزن به القيمة
+
     private void OnEnable()
     {
-        // نتحقق من وجود الـ instance أولاً
         if (PlayerDieManager.instance != null)
         {
             PlayerDieManager.instance.onEndScreenShow += PlayerDieManager_onEndScreenShow;
         }
     }
 
-    // ضروري جداً لإلغاء الاشتراك عند تحميل مشهد جديد أو تدمير الكائن
     private void OnDisable()
     {
         if (PlayerDieManager.instance != null)
@@ -26,12 +26,27 @@ public class EndScreenUI : MonoBehaviour
 
     private void PlayerDieManager_onEndScreenShow(object sender, System.EventArgs e)
     {
-        // تأكد من أن Player.instance موجود ولم يتم تدميره بعد
         if (Player.instance != null)
         {
+            // 1. حساب السكور الحالي
             int finalScore = Player.instance.coinsCounter * 10;
-            scoreText.text = finalScore.ToString();
-            Debug.Log("Score Updated: " + finalScore);
+            scoreText.text = finalScore.ToString("N0");
+
+            // 2. جلب أعلى سكور مسجل سابقاً (إذا لم يوجد سيسجل 0)
+            int previousBestScore = PlayerPrefs.GetInt(BEST_SCORE_KEY, 0);
+
+            // 3. عرض أعلى سكور (القديم) للاعب
+            bestRecordText.text = previousBestScore.ToString("N0");
+
+            // 4. التحقق إذا كان السكور الحالي أعلى من المسجل
+            if (finalScore > previousBestScore)
+            {
+                // تخزين السكور الجديد كأعلى سكور
+                PlayerPrefs.SetInt(BEST_SCORE_KEY, finalScore);
+                PlayerPrefs.Save(); // حفظ التغييرات فوراً
+
+            }
+
         }
     }
 }
